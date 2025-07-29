@@ -5,6 +5,7 @@ const list = require('./commands/list')
 const update = require('./commands/update')
 const del = require('./commands/delete')
 const summary = require('./commands/summary')
+const setBudget = require('./commands/set-budget')
 
 const program = new Command()
 
@@ -47,6 +48,13 @@ program
     .description('Get a summary of all expenses')
     .option('--month <number>', 'summary for a specific month')
     .action(summary)
+
+program
+    .command('set-budget')
+    .description('Set a budget for a specific month')
+    .requiredOption('--month <number>', 'Month in YYYY-MM format')
+    .requiredOption('--amount <number>', 'Budget amount')
+    .action(setBudget)
 
 module.exports = async function runCommand(argv) {
     try {
