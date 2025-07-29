@@ -2,8 +2,6 @@
 
 A simple command-line tool to track your personal expenses, written in Node.js. Add, update, delete, and view your expenses — all from the terminal. Project URL : https://roadmap.sh/projects/expense-tracker
 
----
-
 ## ✨ Features
 
 - Add an expense with description and amount
@@ -13,8 +11,6 @@ A simple command-line tool to track your personal expenses, written in Node.js. 
 - View total expenses
 - View monthly summaries
 - Data is stored in a local JSON file
-
----
 
 ## 🚀 Installation
 

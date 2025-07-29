@@ -19,11 +19,13 @@ program
     .description('Add a new expense')
     .requiredOption('--description <desc>', 'title, or expense description')
     .requiredOption('--amount <number>', 'expense amount')
+    .option('--category <category>', 'Expense category')
     .action(add)
 
 program
     .command('list')
     .description('List all expenses')
+    .option('--category <category>', 'Expense category')
     .action(list)
 
 program
