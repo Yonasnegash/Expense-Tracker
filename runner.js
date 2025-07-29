@@ -6,6 +6,7 @@ const update = require('./commands/update')
 const del = require('./commands/delete')
 const summary = require('./commands/summary')
 const setBudget = require('./commands/set-budget')
+const exportExpenses = require('./commands/export-expenses')
 
 const program = new Command()
 
@@ -55,6 +56,11 @@ program
     .requiredOption('--month <number>', 'Month in YYYY-MM format')
     .requiredOption('--amount <number>', 'Budget amount')
     .action(setBudget)
+
+program
+    .command('export')
+    .description('Export expenses to CSV')
+    .action(exportExpenses)
 
 module.exports = async function runCommand(argv) {
     try {
