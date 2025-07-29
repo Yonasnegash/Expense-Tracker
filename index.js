@@ -1,40 +1,38 @@
-const { program } = require('commander')
-const add = require('./commands/add')
-const list = require('./commands/list')
-const update = require('./commands/update')
-const del = require('./commands/delete')
-const summary = require('./commands/summary')
+const readline = require('readline')
+const runCommand = require('./runner')
 
-program
-    .command('add')
-    .description('Add a new expense')
-    .requiredOption('--description <desc>', 'title, or expense description')
-    .requiredOption('--amount <number>', 'expense amount')
-    .action(add)
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    prompt: 'expense-tracker '
+})
 
-program
-    .command('list')
-    .description('List all expenses')
-    .action(list)
+console.log('Welcome to Expense Tracker CLI!')
+console.log('Type a command or "exit" to quit.')
+rl.prompt()
 
-program
-    .command('update')
-    .description('Update an expense')
-    .requiredOption('--id <id>', 'expense id')
-    .option('--description <desc>', 'title or expense description')
-    .option('--amount <number>', 'expense amount')
-    .action(update)
+rl.on('line', async (line) => {
+    const input = line.trim()
 
-program
-    .command('delete')
-    .description('Delete an expense')
-    .requiredOption('--id <id>', 'expense id')
-    .action(del)
+    if (input === 'exit' || input === 'quit') {
+        rl.close()
+        return
+    }
 
-program
-    .command('summary')
-    .description('Get a summary of all expenses')
-    .option('--month <number>', 'summary for a specific month')
-    .action(summary)
+    if (input === '') {
+        rl.prompt()
+        return
+    }
 
-program.parse()
+    const args = input.match(/"[^"]+"|\S+/g)?.map(arg =>
+        arg.startsWith('"') ? arg.slice(1, -1) : arg
+    ) || []
+
+    await runCommand(args)
+    rl.prompt()
+})
+
+rl.on('close', () => {
+    console.log('Goodbye!')
+    process.exit(0)
+})
